@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "db24834b-2082-4419-aef4-493b1b8ac0d8": {
+      "ProjectGuid": "db24834b-2082-4419-aef4-493b1b8ac0d8",
+      "DisplayName": "TelegramApiForProvider",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
