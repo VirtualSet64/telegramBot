@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ using Telegram.Bot.Types;
 using TelegramApiForProvider.DbService;
 using TelegramApiForProvider.Extended;
 using TelegramApiForProvider.Models;
+using TelegramApiForProvider.Service;
 
 namespace TelegramApiForProvider.Controllers
 {
@@ -19,23 +19,23 @@ namespace TelegramApiForProvider.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private OrderContext db;
-        public MessageController(OrderContext context, IConfiguration configuration)
+
+        private readonly ITelegramBotService _telegramBotService;
+
+        public MessageController(OrderContext context, ITelegramBotService telegramBotService)
         {
             db = context;
-            _configuration = configuration;
+            _telegramBotService = telegramBotService;
         }
         Models.User user = new Models.User();
 
         long chatId = 0;
 
         [HttpPost]
-        public async Task Update([FromBody] object obj)
+        public async Task Update([FromBody] Update update)
         {
-            TelegramBotClient botClient = new TelegramBotClient($"{_configuration["Token"]}");
-
-            Update update = JsonConvert.DeserializeObject<Update>(obj.ToString());
+            //Update update = JsonConvert.DeserializeObject<Update>(obj.ToString());
 
             if (update.Message != null)
             {
@@ -57,16 +57,9 @@ namespace TelegramApiForProvider.Controllers
                             if (update.CallbackQuery.Data == $"{item.OrderNumber} Принят")
                             {
                                 item.IsAccept = true;
-                                await botClient.SendTextMessageAsync(
-                                    chatId: user.ChatId,
-                                    text: $"Заказ номер {item.OrderNumber} принят на обработку"
-                                );
+                                _telegramBotService.SendMessage(user.ChatId, $"Заказ номер {item.OrderNumber} принят на обработку");
 
-                                await botClient.EditMessageReplyMarkupAsync(
-                                    chatId: user.ChatId,
-                                    messageId: (int)item.MessageId
-                                    );
-
+                                _telegramBotService.EditMessage(user.ChatId, (int)item.MessageId);
                                 RequestData requestData = new RequestData
                                 {
                                     OrderId = item.Id,
@@ -77,15 +70,8 @@ namespace TelegramApiForProvider.Controllers
                             if (update.CallbackQuery.Data == $"{item.OrderNumber} Отклонён")
                             {
                                 item.IsAccept = false;
-                                await botClient.SendTextMessageAsync(
-                                    chatId: user.ChatId,
-                                    text: $"Заказ номер {item.OrderNumber} отклонён"
-                                );
-                                await botClient.EditMessageReplyMarkupAsync(
-                                    chatId: user.ChatId,
-                                    messageId: (int)item.MessageId
-                                );
-
+                                _telegramBotService.SendMessage(user.ChatId, $"Заказ номер {item.OrderNumber} отклонён");
+                                _telegramBotService.EditMessage(user.ChatId, (int)item.MessageId);
                                 RequestData requestData = new RequestData
                                 {
                                     OrderId = item.Id,

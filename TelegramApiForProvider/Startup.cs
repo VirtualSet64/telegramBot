@@ -34,7 +34,11 @@ namespace TelegramApiForProvider
 
             services.AddControllers().AddNewtonsoftJson();
 
-            services.AddSingleton<TelegramBot>();
+            //services.AddSingleton<TelegramBot>(); 
+            services.AddSingleton<ITelegramBotService>(provider =>
+            {
+                return new TelegramBotService(Configuration["Token"], Configuration[""]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

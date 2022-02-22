@@ -15,5 +15,10 @@ namespace TelegramApiForProvider.DbService
             //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
+
+        public OrderContext() : base()
+        {
+
+        }
     }
 }

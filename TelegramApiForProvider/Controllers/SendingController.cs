@@ -9,6 +9,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 using TelegramApiForProvider.DbService;
 using TelegramApiForProvider.Extended;
 using TelegramApiForProvider.Models;
+using TelegramApiForProvider.Service;
 
 namespace TelegramApiForProvider.Controllers
 {
@@ -16,30 +17,28 @@ namespace TelegramApiForProvider.Controllers
     [ApiController]
     public class SendingController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private OrderContext db;
 
-        public SendingController(OrderContext context, IConfiguration configuration)
+        private readonly ITelegramBotService _telegramBotService;
+
+        public SendingController(OrderContext context, ITelegramBotService telegramBotService)
         {
             db = context;
-            _configuration = configuration;
+            _telegramBotService = telegramBotService;
         }
 
         Message sentMessage = null;
         ExtendedOrder extendedOrder;
 
         [HttpPost]
-        public async Task ReceiveAndSend(Order order)
+        public async Task/*<ExtendedOrder>*/ ReceiveAndSend(Order order)
         {
-            TelegramBotClient botClient = new TelegramBotClient($"{_configuration["Token"]}");
-
-            var deserializeOrder = JsonConvert.DeserializeObject<Order>(order.ToString());
             extendedOrder = new ExtendedOrder
             {
-                Id = deserializeOrder.Id,
-                OrderNumber = deserializeOrder.OrderNumber,
-                Amount = deserializeOrder.Amount,
-                PhoneNumber = deserializeOrder.PhoneNumber,
+                Id = order.Id,
+                OrderNumber = order.OrderNumber,
+                Amount = order.Amount,
+                PhoneNumber = order.PhoneNumber,
             };
             InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(
                 // first row
@@ -51,17 +50,23 @@ namespace TelegramApiForProvider.Controllers
 
             string orderText = extendedOrder.OrderNumber + "\n" + extendedOrder.PhoneNumber + "\n" + extendedOrder.Amount;
 
-            if (extendedOrder.IsAccept == null && extendedOrder.MessageId == null)
+            if (IsOrderAccept(extendedOrder))
             {
-                sentMessage = await botClient.SendTextMessageAsync(
-                        chatId: 541041424,
-                        text: orderText,
-                        replyMarkup: inlineKeyboard
-                        );
+                sentMessage = await _telegramBotService.SendMessage(541041424, orderText, inlineKeyboard);
                 extendedOrder.MessageId = sentMessage.MessageId;
                 db.ExtendedOrders.Add(extendedOrder);
                 await db.SaveChangesAsync();
             }
+            //return extendedOrder;
+        }
+
+        bool IsOrderAccept(ExtendedOrder extendedOrder)
+        {
+            if (extendedOrder.MessageId == null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
