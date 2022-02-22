@@ -5,7 +5,22 @@
       "ProjectGuid": "db24834b-2082-4419-aef4-493b1b8ac0d8",
       "DisplayName": "TelegramApiForProvider",
       "ColorIndex": 0
+    },
+    "b47c3268-6051-4cde-8431-9fb86d353f7f": {
+      "ProjectGuid": "b47c3268-6051-4cde-8431-9fb86d353f7f",
+      "DisplayName": "TestApiForProvider",
+      "ColorIndex": 1
+    },
+    "8d222963-44bc-492e-aaa1-d1ed7076b1e7": {
+      "ProjectGuid": "8d222963-44bc-492e-aaa1-d1ed7076b1e7",
+      "DisplayName": "TelegramApiForProvider.Tests",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 3
 }

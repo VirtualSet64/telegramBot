@@ -13,7 +13,7 @@ namespace TelegramApiForProvider.DbService
             : base(options)
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();   // создаем базу данных при первом обращении
+            Database.EnsureCreated();
         }
     }
 }
