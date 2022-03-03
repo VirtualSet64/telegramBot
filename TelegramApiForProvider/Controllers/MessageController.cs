@@ -15,88 +15,93 @@ using TelegramApiForProvider.Service;
 
 namespace TelegramApiForProvider.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/message")]
     [ApiController]
     public class MessageController : ControllerBase
     {
         private OrderContext db;
 
         private readonly ITelegramBotService _telegramBotService;
+        private readonly ISendService _sendService;
 
-        public MessageController(OrderContext context, ITelegramBotService telegramBotService)
+        public MessageController(OrderContext context, ITelegramBotService telegramBotService, ISendService sendService)
         {
             db = context;
             _telegramBotService = telegramBotService;
+            _sendService = sendService;
         }
-        Models.User user = new Models.User();
-
-        long chatId = 0;
 
         [HttpPost]
-        public async Task Update([FromBody] Update update)
+        public async Task UpdateAsync([FromBody] Update update)
         {
-            //Update update = JsonConvert.DeserializeObject<Update>(obj.ToString());
-
             if (update.Message != null)
             {
-                chatId = update.Message.Chat.Id;
-                user.ChatId = (int)chatId;
-                db.Users.Add(user);
-                db.SaveChanges();
+                if (update.Message.Text == "/start")
+                {
+                    _telegramBotService.SendMessage(update.Message.From.Id, "Введите номер телефона");
+                }
+                else
+                {
+                    Models.User user = new Models.User
+                    {
+                        Name = update.Message.From.Username,
+                        PhoneNumber = update.Message.Text,
+                        ChatId = update.Message.From.Id
+                    };
+                    if (await _sendService.ConfirmPassword(user.PhoneNumber))
+                    {
+                        if (db.Users.FirstOrDefault(x => x.PhoneNumber == user.PhoneNumber) == null)
+                        {
+                            db.Users.Add(user);
+                            await db.SaveChangesAsync();
+                            _telegramBotService.SendMessage(update.Message.From.Id, "Вход выполнен, ждите заказов");
+                        }
+                        else
+                        {
+                            _telegramBotService.SendMessage(update.Message.From.Id, "Вы уже вошли");
+                        }
+                    }
+                    else
+                    {
+                        _telegramBotService.SendMessage(update.Message.From.Id, "Ошибка при входе");
+                    }
+                }
             }
             if (update.CallbackQuery != null)
             {
-                List<Models.User> users = db.Users.ToList();
+                long chatId = update.CallbackQuery.From.Id;
                 List<ExtendedOrder> extendedOrders = db.ExtendedOrders.ToList();
-                foreach (var user in users)
+                foreach (var item in extendedOrders)
                 {
-                    foreach (var item in extendedOrders)
+                    if (item.IsAccept == null)
                     {
-                        if (item.IsAccept == null)
+                        if (update.CallbackQuery.Data == $"{item.OrderNumber} Принят")
                         {
-                            if (update.CallbackQuery.Data == $"{item.OrderNumber} Принят")
+                            item.IsAccept = true;
+                            _telegramBotService.SendMessage(chatId, $"Заказ номер {item.OrderNumber} принят на обработку");
+                            _telegramBotService.EditMessage(chatId, (int)item.MessageId);
+                            RequestData requestData = new RequestData
                             {
-                                item.IsAccept = true;
-                                _telegramBotService.SendMessage(user.ChatId, $"Заказ номер {item.OrderNumber} принят на обработку");
-
-                                _telegramBotService.EditMessage(user.ChatId, (int)item.MessageId);
-                                RequestData requestData = new RequestData
-                                {
-                                    OrderId = item.Id,
-                                    StatusId = (int)OrderStatus.Accept
-                                };
-                                await SendStatusAsync(requestData);
-                            }
-                            if (update.CallbackQuery.Data == $"{item.OrderNumber} Отклонён")
+                                OrderId = item.Id,
+                                StatusId = (int)OrderStatus.Accept
+                            };
+                            await _sendService.SendStatus(requestData);
+                        }
+                        if (update.CallbackQuery.Data == $"{item.OrderNumber} Отклонён")
+                        {
+                            item.IsAccept = false;
+                            _telegramBotService.SendMessage(chatId, $"Заказ номер {item.OrderNumber} отклонён");
+                            _telegramBotService.EditMessage(chatId, (int)item.MessageId);
+                            RequestData requestData = new RequestData
                             {
-                                item.IsAccept = false;
-                                _telegramBotService.SendMessage(user.ChatId, $"Заказ номер {item.OrderNumber} отклонён");
-                                _telegramBotService.EditMessage(user.ChatId, (int)item.MessageId);
-                                RequestData requestData = new RequestData
-                                {
-                                    OrderId = item.Id,
-                                    StatusId = (int)OrderStatus.Cancel
-                                };
-                                await SendStatusAsync(requestData);
-                            }
+                                OrderId = item.Id,
+                                StatusId = (int)OrderStatus.Cancel
+                            };
+                            await _sendService.SendStatus(requestData);
                         }
                     }
                 }
             }
-        }
-        public async Task SendStatusAsync(RequestData requestData)
-        {
-            var json = JsonConvert.SerializeObject(requestData, Formatting.Indented,
-                                    new JsonSerializerSettings()
-                                    {
-                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                                    });
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var url = "https://staging-api.crondostav.ru/api/adminpanel/v1/Tbot/SetOrderStatus";
-            using var client = new HttpClient();
-
-            var response = await client.PostAsync(url, data);
         }
     }
 }

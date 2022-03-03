@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -31,7 +32,7 @@ namespace TelegramApiForProvider.Controllers
         ExtendedOrder extendedOrder;
 
         [HttpPost]
-        public async Task/*<ExtendedOrder>*/ ReceiveAndSend(Order order)
+        public async Task ReceiveAndSend(Order order)
         {
             extendedOrder = new ExtendedOrder
             {
@@ -50,14 +51,15 @@ namespace TelegramApiForProvider.Controllers
 
             string orderText = extendedOrder.OrderNumber + "\n" + extendedOrder.PhoneNumber + "\n" + extendedOrder.Amount;
 
+            Models.User user = db.Users.FirstOrDefault(x => x.PhoneNumber == order.PartnerPhone);
+            
             if (IsOrderAccept(extendedOrder))
             {
-                sentMessage = await _telegramBotService.SendMessage(541041424, orderText, inlineKeyboard);
+                sentMessage = await _telegramBotService.SendMessage(user.ChatId, orderText, inlineKeyboard);
                 extendedOrder.MessageId = sentMessage.MessageId;
                 db.ExtendedOrders.Add(extendedOrder);
                 await db.SaveChangesAsync();
             }
-            //return extendedOrder;
         }
 
         bool IsOrderAccept(ExtendedOrder extendedOrder)

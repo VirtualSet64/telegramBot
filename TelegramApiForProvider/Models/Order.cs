@@ -17,6 +17,7 @@ namespace TelegramApiForProvider.Models
         /// Номер телефона заказчика
         /// </summary>
         public string PhoneNumber { get; set; }
+        public string PartnerPhone { get; set; }
         /// <summary>
         /// Идентификатор партнера
         /// </summary>

@@ -63,3 +63,4 @@ C:\Users\VirtualSet\source\repos\TelegramApiForProvider\TelegramApiForProvider\o
 C:\Users\VirtualSet\source\repos\TelegramApiForProvider\TelegramApiForProvider\obj\Debug\netcoreapp3.1\TelegramApiForProvider.dll
 C:\Users\VirtualSet\source\repos\TelegramApiForProvider\TelegramApiForProvider\obj\Debug\netcoreapp3.1\TelegramApiForProvider.pdb
 C:\Users\VirtualSet\source\repos\TelegramApiForProvider\TelegramApiForProvider\obj\Debug\netcoreapp3.1\TelegramApiForProvider.genruntimeconfig.cache
+C:\Users\VirtualSet\source\repos\TelegramApiForProvider\TelegramApiForProvider\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll

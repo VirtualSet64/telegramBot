@@ -7,7 +7,7 @@ namespace TelegramApiForProvider.Service
 {
     public class TelegramBotService : ITelegramBotService
     {
-       private readonly TelegramBotClient _client;
+        private readonly TelegramBotClient _client;
 
         public TelegramBotService(string token, string callBackUrl)
         {

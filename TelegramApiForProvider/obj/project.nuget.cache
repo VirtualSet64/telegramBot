@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PHl0hsHsQ9hT+revN7t4rWjUuCcVJKeb+QaZQEyUjzQ943tiA4jdY5kEoDmwPc3cW/lt1qcZwColR2zpkOwBuA==",
+  "dgSpecHash": "QgUPrlb74u7tiLWx4TvQkH3NXbZyaEUr+1FuL9g8D3UJv8lNs2+HoKtMYrbFsz4A76niTPci2/U/kAMk3XgGcA==",
   "success": true,
   "projectFilePath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
   "expectedPackageFiles": [
@@ -13,8 +13,10 @@
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.entityframeworkcore\\3.1.22\\microsoft.entityframeworkcore.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\3.1.22\\microsoft.entityframeworkcore.abstractions.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\3.1.22\\microsoft.entityframeworkcore.analyzers.3.1.22.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.entityframeworkcore.design\\3.1.20\\microsoft.entityframeworkcore.design.3.1.20.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\3.1.22\\microsoft.entityframeworkcore.relational.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\3.1.22\\microsoft.entityframeworkcore.sqlserver.3.1.22.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\3.1.20\\microsoft.entityframeworkcore.tools.3.1.20.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\3.1.22\\microsoft.extensions.caching.abstractions.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.caching.memory\\3.1.22\\microsoft.extensions.caching.memory.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.configuration\\3.1.22\\microsoft.extensions.configuration.3.1.22.nupkg.sha512",

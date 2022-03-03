@@ -34,10 +34,11 @@ namespace TelegramApiForProvider
 
             services.AddControllers().AddNewtonsoftJson();
 
-            //services.AddSingleton<TelegramBot>(); 
+            services.AddSingleton<ISendService, SendService>(); 
+
             services.AddSingleton<ITelegramBotService>(provider =>
             {
-                return new TelegramBotService(Configuration["Token"], Configuration[""]);
+                return new TelegramBotService(Configuration["Token"], Configuration["Url"]);
             });
         }
 
