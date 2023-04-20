@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8fmhzWFTe4vlaf42R5RRV1TM3UMhdj3OYbtK+2gpmLPdG874BV5tihouSPjknEftxYHmdt+4wHK/gKUM9C1unw==",
+  "dgSpecHash": "pEMSz+gxJtDTGHEm4JLyGdBf6Z7gnl2iD95B9wOT9VUoJRfdfBUKetmaz3bjhhrYXbD1/VuiVHKGV/kgrk8gRA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj",
+  "projectFilePath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\VirtualSet\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.22\\microsoft.aspnetcore.jsonpatch.3.1.22.nupkg.sha512",

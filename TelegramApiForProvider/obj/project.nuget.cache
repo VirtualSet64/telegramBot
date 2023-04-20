@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PHl0hsHsQ9hT+revN7t4rWjUuCcVJKeb+QaZQEyUjzQ943tiA4jdY5kEoDmwPc3cW/lt1qcZwColR2zpkOwBuA==",
+  "dgSpecHash": "iApx4Mapl535aMtpUBdFvYjXYnU7rtFC+2wT0CVSS2oJeE3VPqw7Q1m9pkNiuJBFJpL2tF/mNNy5iFRf3D8REg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
+  "projectFilePath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.22\\microsoft.aspnetcore.jsonpatch.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.22\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.22.nupkg.sha512",
@@ -103,8 +103,7 @@
     "C:\\Users\\VirtualSet\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\telegram.bot\\17.0.0\\telegram.bot.17.0.0.nupkg.sha512",
-    "C:\\Users\\VirtualSet\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512",
-    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512"
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }
