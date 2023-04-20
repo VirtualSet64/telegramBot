@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using TelegramApiForProvider.DbService;
-using TelegramApiForProvider.Extended;
 using TelegramApiForProvider.Models;
 using TelegramApiForProvider.Service;
 
@@ -18,57 +16,97 @@ namespace TelegramApiForProvider.Controllers
     [ApiController]
     public class SendingController : ControllerBase
     {
-        private OrderContext db;
+        private readonly OrderContext db;
 
         private readonly ITelegramBotService _telegramBotService;
+        private readonly IOrderService _orderService;
+        private readonly ISendService _sendService;
 
-        public SendingController(OrderContext context, ITelegramBotService telegramBotService)
+        public SendingController(OrderContext context, ITelegramBotService telegramBotService,
+            IOrderService orderService, ISendService sendService)
         {
             db = context;
             _telegramBotService = telegramBotService;
+            _orderService = orderService;
+            _sendService = sendService;
         }
-
-        Message sentMessage = null;
-        ExtendedOrder extendedOrder;
 
         [HttpPost]
-        public async Task ReceiveAndSend(Order order)
+        public async Task ReceiveAndSend(OrderParameter orderParameter)
         {
-            extendedOrder = new ExtendedOrder
+            try
             {
-                Id = order.Id,
-                OrderNumber = order.OrderNumber,
-                Amount = order.Amount,
-                PhoneNumber = order.PhoneNumber,
-            };
-            InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(
-                // first row
-                new InlineKeyboardButton[]
+                var user = db.Users.Where(x => x.PartnerId == orderParameter.PartnerId).FirstOrDefault();
+                var response = _sendService.ConfirmPassword(user.PhoneNumber).Result;
+                if (response != null)
                 {
-                    InlineKeyboardButton.WithCallbackData(text: "Принять", callbackData: $"{extendedOrder.OrderNumber} Принят"),
-                    InlineKeyboardButton.WithCallbackData(text: "Отклонить", callbackData: $"{extendedOrder.OrderNumber} Отклонён"),
-                });
+                    var users = db.Users.ToList();
+                    //var users = db.Users.Where(x => x.PartnerId == orderParameter.PartnerId).ToList();
+                    Order order = new Order
+                    {
+                        Id = orderParameter.Id,
+                        OrderNumber = orderParameter.OrderNumber,
+                        PartnerName = orderParameter.PartnerName,
+                        PartnerId = orderParameter.PartnerId,
+                        //CreateDatetime = orderParameter.CreateDatetime
+                    };
+                    foreach (var item in users)
+                    {
+                        OrderMessage orderMessage = new OrderMessage
+                        {
+                            Id = Guid.NewGuid(),
+                            MessageId = null,
+                            ChatId = item.ChatId,
+                            OrderId = orderParameter.Id,
+                            Order = order
+                        };
+                        db.OrderMessages.Add(orderMessage);
+                    }
+                    db.Orders.Add(order);
+                    await db.SaveChangesAsync();
 
-            string orderText = extendedOrder.OrderNumber + "\n" + extendedOrder.PhoneNumber + "\n" + extendedOrder.Amount;
+                    InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(
+                        new InlineKeyboardButton[]
+                        {
+                    InlineKeyboardButton.WithCallbackData(text: "Принять ✅", callbackData: $"{orderParameter.OrderNumber} Принят"),
+                    InlineKeyboardButton.WithCallbackData(text: "Отклонить ❌", callbackData: $"{orderParameter.OrderNumber} Отклонён"),
+                        });
 
-            Models.User user = db.Users.FirstOrDefault(x => x.PhoneNumber == order.PartnerPhone);
-            
-            if (IsOrderAccept(extendedOrder))
-            {
-                sentMessage = await _telegramBotService.SendMessage(user.ChatId, orderText, inlineKeyboard);
-                extendedOrder.MessageId = sentMessage.MessageId;
-                db.ExtendedOrders.Add(extendedOrder);
-                await db.SaveChangesAsync();
+                    string orderText = "";
+
+                    orderText = _orderService.CreateDescriptionForCron(orderParameter);
+
+                    //if (orderParameter.DeliveryType.Id == (int)DeliveryName.CronMarket)
+                    //    {
+                    //        orderText = _orderService.CreateDescriptionForCron(orderParameter);
+                    //    }
+                    //    if (orderParameter.DeliveryType.Id == (int)DeliveryName.Marketplace)
+                    //    {
+                    //        orderText = _orderService.CreateDescriptionForPartner(orderParameter);
+                    //    }
+
+                    foreach (var item in users)
+                    {
+                        var orderrr = db.OrderMessages.FirstOrDefault(x => x.MessageId == null && x.OrderId == orderParameter.Id);
+                        try
+                        {
+                            var sentMessage = await _telegramBotService.SendMessage(orderrr.ChatId, orderText, inlineKeyboard, ParseMode.Html);
+                            orderrr.MessageId = sentMessage.MessageId;
+                            db.OrderMessages.Update(orderrr);
+                        }
+                        catch (Exception ex)
+                        {
+                            db.OrderMessages.Remove(orderrr);
+                            throw;
+                        }
+                        await db.SaveChangesAsync();
+                    }
+                }
             }
-        }
-
-        bool IsOrderAccept(ExtendedOrder extendedOrder)
-        {
-            if (extendedOrder.MessageId == null)
+            catch (Exception ex)
             {
-                return true;
+                throw;
             }
-            return false;
         }
     }
 }

@@ -3,24 +3,25 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TelegramApiForProvider.Models;
+using TelegramApiForProvider.Contract;
 
 namespace TelegramApiForProvider.Service
 {
     public class SendService : ISendService
     {
-        public async Task<bool> ConfirmPassword(string phoneNumber)
+        public async Task<CheckPartnerResponseModel> ConfirmPassword(string phoneNumber)
         {
-            var url = "https://staging-api.crondostav.ru/api/adminpanel/v1/Tbot/CheckPartnerPhone?" + $"partnerPhone={phoneNumber}";
+            var url = $"{Configurations.AdminPanel}/api/adminpanel/v1/Tbot/CheckPartnerPhone?" + $"partnerPhone={phoneNumber}";
             using var client = new HttpClient();
 
             var response = await client.GetAsync(url);
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
-                return false;
+                return null;
             }
             else
             {
-                return true;
+                return JsonConvert.DeserializeObject<CheckPartnerResponseModel>(response.Content.ReadAsStringAsync().Result);
             }
         }
 
@@ -33,7 +34,7 @@ namespace TelegramApiForProvider.Service
                                     });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var url = "https://staging-api.crondostav.ru/api/adminpanel/v1/Tbot/SetOrderStatus";
+            var url = "https://api.cronmarket.ru/api/adminpanel/v1/Tbot/SetOrderStatus";
             using var client = new HttpClient();
 
             var response = await client.PutAsync(url, data);

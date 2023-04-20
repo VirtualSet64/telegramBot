@@ -1,9 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "QgUPrlb74u7tiLWx4TvQkH3NXbZyaEUr+1FuL9g8D3UJv8lNs2+HoKtMYrbFsz4A76niTPci2/U/kAMk3XgGcA==",
+  "dgSpecHash": "yHGEUpMtqo9V6NPa1ZCJCT162opY2F4N+HPUyZEjtr54uka/++BKAdWCZov2+eu7jw3WGU8L5ErUa7DkT7CVXg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
+  "projectFilePath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\coravel\\4.1.1\\coravel.4.1.1.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.20\\microsoft.aspnetcore.authentication.jwtbearer.3.1.20.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.20\\microsoft.aspnetcore.cryptography.internal.3.1.20.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.20\\microsoft.aspnetcore.cryptography.keyderivation.3.1.20.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.20\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.20.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.22\\microsoft.aspnetcore.jsonpatch.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.22\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
@@ -24,6 +29,10 @@
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.configuration.binder\\3.1.22\\microsoft.extensions.configuration.binder.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\3.1.22\\microsoft.extensions.dependencyinjection.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.22\\microsoft.extensions.dependencyinjection.abstractions.3.1.22.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\3.1.0\\microsoft.extensions.fileproviders.abstractions.3.1.0.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\3.1.0\\microsoft.extensions.hosting.abstractions.3.1.0.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.identity.core\\3.1.20\\microsoft.extensions.identity.core.3.1.20.nupkg.sha512",
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.identity.stores\\3.1.20\\microsoft.extensions.identity.stores.3.1.20.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.logging\\3.1.22\\microsoft.extensions.logging.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.22\\microsoft.extensions.logging.abstractions.3.1.22.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.extensions.options\\3.1.22\\microsoft.extensions.options.3.1.22.nupkg.sha512",
@@ -105,8 +114,7 @@
     "C:\\Users\\VirtualSet\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\VirtualSet\\.nuget\\packages\\telegram.bot\\17.0.0\\telegram.bot.17.0.0.nupkg.sha512",
-    "C:\\Users\\VirtualSet\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512",
-    "C:\\Users\\VirtualSet\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512"
+    "C:\\Users\\VirtualSet\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj": {}
+    "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj": {
+    "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj",
         "projectName": "TelegramApiForProvider.Tests",
-        "projectPath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj",
+        "projectPath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider.Test\\TelegramApiForProvider.Tests.csproj",
         "packagesPath": "C:\\Users\\VirtualSet\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider.Test\\obj\\",
+        "outputPath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider.Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj": {
-                "projectPath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj"
+              "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj": {
+                "projectPath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj"
               }
             }
           }
@@ -77,7 +78,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -86,18 +88,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj": {
+    "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
+        "projectUniqueName": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
         "projectName": "TelegramApiForProvider",
-        "projectPath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
+        "projectPath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\TelegramApiForProvider.csproj",
         "packagesPath": "C:\\Users\\VirtualSet\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VirtualSet\\source\\repos\\TelegramApiForProvider\\TelegramApiForProvider\\obj\\",
+        "outputPath": "C:\\Users\\VirtualSet\\source\\repos\\WissTelegramApiForProvider\\TelegramApiForProvider\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -112,6 +114,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -130,6 +133,18 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Coravel": {
+              "target": "Package",
+              "version": "[4.1.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.20, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.20, )"
+            },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
               "version": "[3.1.22, )"
@@ -165,16 +180,11 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.21, 3.1.21]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -183,7 +193,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

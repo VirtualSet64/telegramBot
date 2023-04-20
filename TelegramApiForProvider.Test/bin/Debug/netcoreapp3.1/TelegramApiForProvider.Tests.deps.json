@@ -39,6 +39,61 @@
           }
         }
       },
+      "Coravel/4.1.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Memory": "3.1.22",
+          "Microsoft.Extensions.Hosting.Abstractions": "3.1.0",
+          "Microsoft.Extensions.Logging.Abstractions": "3.1.22"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Coravel.dll": {
+            "assemblyVersion": "4.1.1.0",
+            "fileVersion": "4.1.1.0"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.20": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "5.5.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "assemblyVersion": "3.1.20.0",
+            "fileVersion": "3.100.2021.47242"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.Internal/3.1.20": {
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll": {
+            "assemblyVersion": "3.1.20.0",
+            "fileVersion": "3.100.2021.47242"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/3.1.20": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.Internal": "3.1.20"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
+            "assemblyVersion": "3.1.20.0",
+            "fileVersion": "3.100.2021.47242"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.20": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "3.1.22",
+          "Microsoft.Extensions.Identity.Stores": "3.1.20"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
+            "assemblyVersion": "3.1.20.0",
+            "fileVersion": "3.100.2021.47242"
+          }
+        }
+      },
       "Microsoft.AspNetCore.JsonPatch/3.1.22": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -248,6 +303,45 @@
           "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
             "assemblyVersion": "3.1.22.0",
             "fileVersion": "3.100.2221.57103"
+          }
+        }
+      },
+      "Microsoft.Extensions.FileProviders.Abstractions/3.1.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "3.1.22"
+        }
+      },
+      "Microsoft.Extensions.Hosting.Abstractions/3.1.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "3.1.22",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.22",
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.0",
+          "Microsoft.Extensions.Logging.Abstractions": "3.1.22"
+        }
+      },
+      "Microsoft.Extensions.Identity.Core/3.1.20": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "3.1.20",
+          "Microsoft.Extensions.Logging": "3.1.22",
+          "Microsoft.Extensions.Options": "3.1.22"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll": {
+            "assemblyVersion": "3.1.20.0",
+            "fileVersion": "3.100.2021.47242"
+          }
+        }
+      },
+      "Microsoft.Extensions.Identity.Stores/3.1.20": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "3.1.22",
+          "Microsoft.Extensions.Identity.Core": "3.1.20",
+          "Microsoft.Extensions.Logging": "3.1.22"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll": {
+            "assemblyVersion": "3.1.20.0",
+            "fileVersion": "3.100.2021.47242"
           }
         }
       },
@@ -1437,6 +1531,9 @@
       "xunit.runner.visualstudio/2.4.3": {},
       "TelegramApiForProvider/1.0.0": {
         "dependencies": {
+          "Coravel": "4.1.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.20",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.20",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.22",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.22",
           "Telegram.Bot": "17.0.0",
@@ -1460,6 +1557,41 @@
       "sha512": "sha512-b5rRL5zeaau1y/5hIbI+6mGw3cwun16YjkHZnV9RRT5UyUIFsgLmNXJ0YnIN9p8Hw7K7AbG1q1UclQVU3DinAQ==",
       "path": "castle.core/4.4.0",
       "hashPath": "castle.core.4.4.0.nupkg.sha512"
+    },
+    "Coravel/4.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HgjOCnsDiUIACPVo1PFrifecIRuY+Nawiya6xcZsGVg5nqYnLBn2avJs8Eg2BEJ0/tRG34LRmJMQW6Spznt6fg==",
+      "path": "coravel/4.1.1",
+      "hashPath": "coravel.4.1.1.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.20": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fec08fgXSPp/F2nKxDZ00jN22fT86DlYExq3pH/fARjnEJZlhlFLxTWJd/pJr/8tdqVIPcxfLdIg628/DJznuA==",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/3.1.20",
+      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.3.1.20.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Cryptography.Internal/3.1.20": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WApVxYjKs9bmognrA0t+V8oFAVUgO3SGz0zCXJTY9lo8pQY6zau8bNSaHdJ8oqRNPBQmqn2Fb6xijq984uvMIQ==",
+      "path": "microsoft.aspnetcore.cryptography.internal/3.1.20",
+      "hashPath": "microsoft.aspnetcore.cryptography.internal.3.1.20.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/3.1.20": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ty2ftT/kEUWYkc7PBpa0QYLq9CFfOI5D0bib60pGAm/+dLfjFFTG7fO8sdUdDj3JaCWqbcFfVZaMr548jJyb0g==",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/3.1.20",
+      "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.3.1.20.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.20": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n6DuOAbn8gS1qJmvtv4iV5tNJZuqgL9G6WRJZVXgIpN7m92rPHSWcohdOQhBXqF06hWnW5f/8S2380J1qPztqw==",
+      "path": "microsoft.aspnetcore.identity.entityframeworkcore/3.1.20",
+      "hashPath": "microsoft.aspnetcore.identity.entityframeworkcore.3.1.20.nupkg.sha512"
     },
     "Microsoft.AspNetCore.JsonPatch/3.1.22": {
       "type": "package",
@@ -1593,6 +1725,34 @@
       "sha512": "sha512-+zBl4NrqANk4JalElpCZ3P2rQ33A3ldRCF1K7RikOuNzEWG5B2M5C+Izas7q5Ub6bFMzAvCJh5E+BtT/gTUD6Q==",
       "path": "microsoft.extensions.dependencyinjection.abstractions/3.1.22",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.3.1.22.nupkg.sha512"
+    },
+    "Microsoft.Extensions.FileProviders.Abstractions/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-G3iBMOnn3tETEUvkE9J3a23wQpRkiXZp73zR0XNlicjLFhkeWW1FCaC2bTjrgHhPi2KO6x0BXnHvVuJPIlygBQ==",
+      "path": "microsoft.extensions.fileproviders.abstractions/3.1.0",
+      "hashPath": "microsoft.extensions.fileproviders.abstractions.3.1.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Hosting.Abstractions/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LiOP1ceFaPBxaE28SOjtORzOVCJk33TT5VQ/Cg5EoatZh1dxpPAgAV/0ruzWKQE7WAHU3F1H9Z6rFgsQwIb9uQ==",
+      "path": "microsoft.extensions.hosting.abstractions/3.1.0",
+      "hashPath": "microsoft.extensions.hosting.abstractions.3.1.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Identity.Core/3.1.20": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QoLqxSp1FMk3Tsxqc5wDvtlENGuzPH7J4n0855Vqtf1tANOxAXhhb3HRC7yESyoQia9lOgmeXkYdIpW/lWLwQg==",
+      "path": "microsoft.extensions.identity.core/3.1.20",
+      "hashPath": "microsoft.extensions.identity.core.3.1.20.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Identity.Stores/3.1.20": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-267503jseCH6mKD7RPSSokb1P+y2lD+4oVLQnOx1fyg7KnPHiy78iued4Pcf8P8dThOlaOaxlen5ET2+eiWiDQ==",
+      "path": "microsoft.extensions.identity.stores/3.1.20",
+      "hashPath": "microsoft.extensions.identity.stores.3.1.20.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/3.1.22": {
       "type": "package",

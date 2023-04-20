@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Telegram.Bot;
 using Telegram.Bot.Types;
+using TelegramApiForProvider.AccountService;
 using TelegramApiForProvider.DbService;
-using TelegramApiForProvider.Extended;
 using TelegramApiForProvider.Models;
 using TelegramApiForProvider.Service;
+using TelegramApiForProvider.ViewModels;
 
 namespace TelegramApiForProvider.Controllers
 {
@@ -19,88 +19,143 @@ namespace TelegramApiForProvider.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
-        private OrderContext db;
+        private readonly OrderContext db;
+
+        private readonly RegisterService _registerService;
 
         private readonly ITelegramBotService _telegramBotService;
         private readonly ISendService _sendService;
 
-        public MessageController(OrderContext context, ITelegramBotService telegramBotService, ISendService sendService)
+        public MessageController(OrderContext context, ITelegramBotService telegramBotService, ISendService sendService,
+            RegisterService registerService)
         {
             db = context;
             _telegramBotService = telegramBotService;
             _sendService = sendService;
+            _registerService = registerService;
         }
 
         [HttpPost]
-        public async Task UpdateAsync([FromBody] Update update)
+        public async Task Update([FromBody] Update update)
         {
-            if (update.Message != null)
+            try
             {
-                if (update.Message.Text == "/start")
+                if (update.Message != null)
                 {
-                    _telegramBotService.SendMessage(update.Message.From.Id, "Введите номер телефона");
-                }
-                else
-                {
-                    Models.User user = new Models.User
+                    if (update.Message.Text == "/start")
                     {
-                        Name = update.Message.From.Username,
-                        PhoneNumber = update.Message.Text,
-                        ChatId = update.Message.From.Id
-                    };
-                    if (await _sendService.ConfirmPassword(user.PhoneNumber))
-                    {
-                        if (db.Users.FirstOrDefault(x => x.PhoneNumber == user.PhoneNumber) == null)
-                        {
-                            db.Users.Add(user);
-                            await db.SaveChangesAsync();
-                            _telegramBotService.SendMessage(update.Message.From.Id, "Вход выполнен, ждите заказов");
-                        }
-                        else
-                        {
-                            _telegramBotService.SendMessage(update.Message.From.Id, "Вы уже вошли");
-                        }
+                        _telegramBotService.SendMessage(update.Message.From.Id, "Введите номер телефона в формате 79*********");
                     }
                     else
                     {
-                        _telegramBotService.SendMessage(update.Message.From.Id, "Ошибка при входе");
+                        var phoneNumber = update.Message.Text;
+                        //var response = _sendService.ConfirmPassword(phoneNumber).Result;
+                        //if (response != null)
+                        //{
+                        if (!db.Users.Any(x => x.ChatId == update.Message.From.Id))
+                        {
+                            Models.User user = new Models.User
+                            {
+                                Name = update.Message.From.Username,
+                                PhoneNumber = update.Message.Text,
+                                ChatId = update.Message.From.Id,
+                                //PartnerId = response.PartnerId
+                            };
+
+                            UserForIdentity userForIdentity = new UserForIdentity
+                            {
+                                PhoneNumber = phoneNumber,
+                            };
+
+                            AccountViewModel registerViewModel = new AccountViewModel()
+                            {
+                                PhoneNumber = phoneNumber,
+                                Password = "123"
+                            };
+                            await _registerService.Register(registerViewModel, userForIdentity);
+
+                            db.Users.Add(user);
+                            await db.SaveChangesAsync();
+                            //_telegramBotService.SendMessage(update.Message.From.Id, $"Вход выполнен, {response.PartnerName}, ждите заказов");
+                        }
+                        else
+                        {
+                            Models.User userUpdate = db.Users.FirstOrDefault(n => n.PhoneNumber == phoneNumber);
+                            //userUpdate.PartnerId = response.PartnerId;
+                            userUpdate.Name = phoneNumber;
+                            userUpdate.PhoneNumber = phoneNumber;
+                            //db.Users.Update(userUpdate);
+                            //await db.SaveChangesAsync();
+                            //_telegramBotService.SendMessage(update.Message.From.Id, $"Вход выполнен, {response.PartnerName}, ждите заказов");
+                        }
+                        //}
+                        //else
+                        //{
+                        //    _telegramBotService.SendMessage(update.Message.From.Id, "Ошибка при входе");
+                        //}
                     }
                 }
             }
-            if (update.CallbackQuery != null)
+            catch (System.Exception ex)
             {
-                long chatId = update.CallbackQuery.From.Id;
-                List<ExtendedOrder> extendedOrders = db.ExtendedOrders.ToList();
-                foreach (var item in extendedOrders)
+                throw;
+            }
+            await CallbackHandlingAsync(update.CallbackQuery);
+        }
+
+        public async Task CallbackHandlingAsync(CallbackQuery callbackQuery)
+        {
+            try
+            {
+                if (callbackQuery != null)
                 {
-                    if (item.IsAccept == null)
+                    long chatId = callbackQuery.From.Id;
+                    List<OrderMessage> orderMessages = db.OrderMessages
+                        .Include(x => x.Order)
+                        .Where(x => x.ChatId == chatId &&
+                                    x.Order.IsAccept == null &&
+                                    x.MessageId != null)
+                        .ToList();
+
+                    foreach (var order in orderMessages)
                     {
-                        if (update.CallbackQuery.Data == $"{item.OrderNumber} Принят")
+                        if (callbackQuery.Data == $"{order.Order.OrderNumber} Принят")
                         {
-                            item.IsAccept = true;
-                            _telegramBotService.SendMessage(chatId, $"Заказ номер {item.OrderNumber} принят на обработку");
-                            _telegramBotService.EditMessage(chatId, (int)item.MessageId);
+                            string orderNumber = callbackQuery.Data.Replace(" Принят", "");
+
+                            order.Order.IsAccept = true;
+                            await _telegramBotService.SendMessage(order.ChatId, $"Заказ номер {order.Order.OrderNumber} принят на обработку.", order.MessageId);
+                            _telegramBotService.EditMessage(order.ChatId, (int)order.MessageId);
+
                             RequestData requestData = new RequestData
                             {
-                                OrderId = item.Id,
+                                OrderId = order.Order.Id,
                                 StatusId = (int)OrderStatus.Accept
                             };
-                            await _sendService.SendStatus(requestData);
+                            //await _sendService.SendStatus(requestData);
                         }
-                        if (update.CallbackQuery.Data == $"{item.OrderNumber} Отклонён")
+                        if (callbackQuery.Data == $"{order.Order.OrderNumber} Отклонён")
                         {
-                            item.IsAccept = false;
-                            _telegramBotService.SendMessage(chatId, $"Заказ номер {item.OrderNumber} отклонён");
-                            _telegramBotService.EditMessage(chatId, (int)item.MessageId);
+                            string orderNumber = callbackQuery.Data.Replace(" Отклонён", "");
+
+                            order.Order.IsAccept = false;
+                            await _telegramBotService.SendMessage(order.ChatId, $"Заказ номер {order.Order.OrderNumber} отклонён.", order.MessageId);
+                            _telegramBotService.EditMessage(order.ChatId, (int)order.MessageId);
+
                             RequestData requestData = new RequestData
                             {
-                                OrderId = item.Id,
+                                OrderId = order.Order.Id,
                                 StatusId = (int)OrderStatus.Cancel
                             };
-                            await _sendService.SendStatus(requestData);
+                            //await _sendService.SendStatus(requestData);
                         }
+                        await db.SaveChangesAsync();
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }

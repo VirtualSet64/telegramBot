@@ -10,8 +10,8 @@ using TelegramApiForProvider.DbService;
 namespace TelegramApiForProvider.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20220301143100_migration1")]
-    partial class migration1
+    [Migration("20221011100237_UserMigration")]
+    partial class UserMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,14 +21,37 @@ namespace TelegramApiForProvider.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TelegramApiForProvider.Extended.ExtendedOrder", b =>
+            modelBuilder.Entity("TelegramApiForProvider.Models.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<DateTime>("CreateDatetime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PartnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PartnerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("TelegramApiForProvider.Models.OrderMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("ChatId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool?>("IsAccept")
                         .HasColumnType("bit");
@@ -36,18 +59,14 @@ namespace TelegramApiForProvider.Migrations
                     b.Property<int?>("MessageId")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PartnerPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExtendedOrders");
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderMessages");
                 });
 
             modelBuilder.Entity("TelegramApiForProvider.Models.User", b =>
@@ -62,12 +81,24 @@ namespace TelegramApiForProvider.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("PartnerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TelegramApiForProvider.Models.OrderMessage", b =>
+                {
+                    b.HasOne("TelegramApiForProvider.Models.Order", "Order")
+                        .WithMany("Message")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

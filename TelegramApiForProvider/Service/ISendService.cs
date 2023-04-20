@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using TelegramApiForProvider.Contract;
 using TelegramApiForProvider.Models;
 
 namespace TelegramApiForProvider.Service
@@ -6,6 +7,6 @@ namespace TelegramApiForProvider.Service
     public interface ISendService
     {
         Task SendStatus(RequestData requestData);
-        Task<bool> ConfirmPassword(string phoneNumber);
+        Task<CheckPartnerResponseModel> ConfirmPassword(string phoneNumber);
     }
 }
